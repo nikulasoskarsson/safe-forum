@@ -4,14 +4,14 @@
             <div class="card card-body bg-light mt-5">
                 <h3>Sign up for Forum</h3>
                 <p>Please fill out this form to register with us</p>
-                <form action="">
+                <form action="<?= URLROOT ?>/users/register" method="POST">
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First name: <sup>*</sup></label>
                     <input type="text" class="form-control" id="firstName" name="firstName">
                 </div>
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Last name: <sup>*</sup></label>
-                    <input type="email" class="form-control" id="lastName" name="lastName">
+                    <input type="text" class="form-control" id="lastName" name="lastName">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address: <sup>*</sup></label>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username: <sup>*</sup></label>
-                    <input type="username" class="form-control" id="username" name="username">
+                    <input type="text" class="form-control" id="username" name="username">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password: <sup>*</sup></label>

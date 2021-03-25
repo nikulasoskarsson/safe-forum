@@ -18,10 +18,10 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?= URLROOT ?>">Login</a>
+          <a class="nav-link active" aria-current="page" href="<?= URLROOT ?>/users/login">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="<?= URLROOT ?>/users/register">Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Logout</a>
