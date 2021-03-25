@@ -7,6 +7,6 @@
     // App root
     define('APPROOT', dirname(dirname(__FILE__)));
     // URL root
-    define('URLROOT', 'localhost/forum');
+    define('URLROOT', 'http://localhost/forum');
     // Site name
     define('SITENAME', 'Forum');
