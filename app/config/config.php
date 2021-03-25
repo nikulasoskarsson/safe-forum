@@ -1,12 +1,12 @@
 <?php
     // DB params
     define('DB_HOST', 'localhost');
-    define('DB_USER', '_YOUR_USER');
-    define('DB_PASS', '_YOUR_PASS');
-    DEFINE('DB_NAME', '_YOUR_DB_NAME');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+    DEFINE('DB_NAME', 'forum');
     // App root
     define('APPROOT', dirname(dirname(__FILE__)));
     // URL root
-    define('URLROOT', '_YOUR_URL');
+    define('URLROOT', 'localhost/forum');
     // Site name
-    define('SITENAME', '_YOUR_SITE_NAME');
+    define('SITENAME', 'Forum');
