@@ -106,10 +106,9 @@
                     }
                 }
                 if($errors['confirm_password'] == ''){
-                    $errors['confirm_password'] = isPasswordSameAsConfirmPassword($errors['password'], $errors['confirm_password']);
+                    $errors['confirm_password'] = isPasswordSameAsConfirmPassword($form['password'], $form['confirm_password']);
                 }
                 
-                $form['confirm_password'] = password_hash($form['password'], true);
 
                 $data = [
                     'form' => $form,
@@ -119,14 +118,15 @@
                 // TODO check if emails exists
                 if(isErrorInErrorArray($errors)){
                     $this->view('users/register', $data);
+                } else {
+                    $data['form']['password'] = password_hash($data['form']['password'], true);
+                    if($this->userModel->register($form)){
+                        die('success');
+                    } else {
+                        die('fail');
+                    }
                 }
 
-                
-                if($this->userModel->register($form)){
-                    die('success');
-                } else {
-                    die('fail');
-                }
             }
         }
     }

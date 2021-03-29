@@ -7,28 +7,34 @@
                 <form action="<?= URLROOT ?>/users/register" method="POST">
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First name: <sup>*</sup></label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" value="<?= $data['form']['first_name'] ?>">
+                    <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'first_name') ?>" id="firstName" name="firstName" value="<?= $data['form']['first_name'] ?>">
+                    <?php checkAndShowError($data['errors']['first_name']) ?>
                 </div>
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Last name: <sup>*</sup></label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" value="<?= $data['form']['last_name'] ?>">
+                    <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'last_name') ?>" id="lastName" name="lastName" value="<?= $data['form']['last_name'] ?>">
+                    <?php checkAndShowError($data['errors']['last_name']) ?>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address: <sup>*</sup></label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="<?= $data['form']['email'] ?>">
+                    <input type="email" class="form-control <?= getBootstrapValidationClass($data, 'email') ?>" id="email" aria-describedby="emailHelp" name="email" value="<?= $data['form']['email'] ?>">
                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <?php checkAndShowError($data['errors']['email']) ?>
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username: <sup>*</sup></label>
-                    <input type="text" class="form-control" id="username" name="username" value="<?= $data['form']['username'] ?>">
+                    <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'username') ?>" id="username" name="username" value="<?= $data['form']['username'] ?>">
+                    <?php checkAndShowError($data['errors']['username']) ?>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password: <sup>*</sup></label>
-                    <input type="password" class="form-control" id="password" name="password" value="<?= $data['form']['password'] ?>">
+                    <input type="password" class="form-control <?= getBootstrapValidationClass($data, 'password') ?>" id="password" name="password" value="<?= $data['form']['password'] ?>">
+                    <?php checkAndShowError($data['errors']['password']) ?>
                 </div>
                 <div class="mb-3">
                     <label for="password2" class="form-label">Repeat Password: <sup>*</sup></label>
-                    <input type="password" class="form-control" id="password2" name="password2" value="<?= $data['form']['confirm_password'] ?>">
+                    <input type="password" class="form-control <?= getBootstrapValidationClass($data, 'confirm_password') ?>" id="password2" name="password2" value="<?= $data['form']['confirm_password'] ?>">
+                    <?php checkAndShowError($data['errors']['confirm_password']) ?>
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="terms">
