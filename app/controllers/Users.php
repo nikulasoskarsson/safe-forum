@@ -22,8 +22,9 @@
 
                 // Handle email login
                 if(filter_var($data['user'], FILTER_VALIDATE_EMAIL)){
-                    if($this->userModel->loginWithEmail($data)){
-                        die('success');
+                    $user = $this->userModel->loginWithEmail($data);
+                    if($user){
+                        createUserSession($user);
                     } else {
                         die('fail');
                     }
@@ -86,11 +87,41 @@
                     'confirm_password' => '',
                 ];
 
-                // TODO Server side validation
+                // Server side validation
+                $errors['first_name'] = minMaxEmpty($form['first_name'], 'First name', 2, 20);
+                $errors['last_name'] = minMaxEmpty($form['last_name'], 'Last name', 2, 20);
+                $errors['email'] = isValidEmail($form['email']);
+                $errors['username'] = minMaxEmpty($form['username'], 'Username', 2, 20);
+                $errors['password'] = minMaxEmpty($form['password'], 'Password', 6, 20);
+                $errors['confirm_password'] = minMaxEmpty($form['password'], 'Password', 6, 20);
+                // Only check if it dosen't already have an error
+                if($errors['email'] == ''){
+                    if($this->userModel->findUserByEmail($form['email'])){
+                        $errors['email'] = 'Email is already registered';
+                    }
+                }
+                if($errors['username'] == ''){
+                    if($this->userModel->findUserByUsername($form['username'])){
+                        $errors['username'] = 'Username is already registered';
+                    }
+                }
+                if($errors['confirm_password'] == ''){
+                    $errors['confirm_password'] = isPasswordSameAsConfirmPassword($errors['password'], $errors['confirm_password']);
+                }
+                
+                $form['confirm_password'] = password_hash($form['password'], true);
 
-                $form['password'] = password_hash($form['password'], true);
+                $data = [
+                    'form' => $form,
+                    'errors' => $errors,
+                ];
                 
                 // TODO check if emails exists
+                if(isErrorInErrorArray($errors)){
+                    $this->view('users/register', $data);
+                }
+
+                
                 if($this->userModel->register($form)){
                     die('success');
                 } else {

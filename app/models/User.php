@@ -56,4 +56,20 @@
                 return false;
             }
         }
+
+        public function findUserByEmail($email){
+            $this->db->query('SELECT * FROM users WHERE email = :email');
+            $this->db->bind(':email', $email);
+            $row = $this->db->single();
+
+            return $row ? true : false;
+        }
+
+        public function findUserByUsername($username){
+            $this->db->query('SELECT * FROM users WHERE username = :username');
+            $this->db->bind(':username', $username);
+            $row = $this->db->single();
+
+            return $row ? true : false;
+        }
     }
