@@ -42,6 +42,7 @@
 
                 $this->view('users/register', $data);
             } else {
+                // POST
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 $form = [
@@ -65,12 +66,10 @@
                 // TODO Server side validation
                 
                 // TODO check if emails exists
-                $this->userModel->register($form);
-                die();
                 if($this->userModel->register($form)){
-                    
+                    die('success');
                 } else {
-                    
+                    die('fail');
                 }
             }
         }

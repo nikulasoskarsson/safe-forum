@@ -11,7 +11,7 @@
         public function register($form){
             $this->db->query('INSERT INTO 
                               users (first_name, last_name, email, username, password)
-                              values (:first_name, :last_name, :email, :username: :password)
+                              values (:first_name, :last_name, :email, :username, :password)
                             ');
 
             $this->db->bind(':first_name', $form['first_name']);
