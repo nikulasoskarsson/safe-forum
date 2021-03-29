@@ -11,6 +11,29 @@
                 $this->view('users/login');
             } else {
                 // POST
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                $data = [
+                    'user' => trim($_POST['user']),
+                    'password' => trim($_POST['password']),
+                    'user_error' => '',
+                    'password_error' => '',
+                ];
+
+                // Handle email login
+                if(filter_var($data['user'], FILTER_VALIDATE_EMAIL)){
+                    if($this->userModel->loginWithEmail($data)){
+                        die('success');
+                    } else {
+                        die('fail');
+                    }
+                } else{
+                    if($this->userModel->loginWithUsername($data)){
+                        die('success');
+                    } else {
+                        die('fail');
+                    }
+                }
             }
         }
 
@@ -64,6 +87,8 @@
                 ];
 
                 // TODO Server side validation
+
+                $form['password'] = password_hash($form['password'], true);
                 
                 // TODO check if emails exists
                 if($this->userModel->register($form)){

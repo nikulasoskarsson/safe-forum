@@ -4,10 +4,10 @@
             <div class="card card-body bg-light mt-5">
                 <h3>Login to forum</h3>
                 <p>Login to be able to post, comment and upvote</p>
-                <form action="">
+                <form action="<?= URLROOT ?>/users/login" method="POST">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address or username</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+                    <label for="user" class="form-label">Email address or username</label>
+                    <input type="text" class="form-control" id="user" name="user">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
