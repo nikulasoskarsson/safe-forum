@@ -17,7 +17,7 @@
         private $error;
 
         public function __construct(){
-            $dsn = "mysql:host=$this->host; dbname=$this->dbName";
+            $dsn = "mysql:host=$this->host; dbname=$this->dbName; charset=utf8mb4";
             $options = array(
                 PDO::ATTR_PERSISTENT => true,
                 PDO::ERR_NONE => PDO::ERRMODE_EXCEPTION,
