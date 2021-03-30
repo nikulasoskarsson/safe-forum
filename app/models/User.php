@@ -8,16 +8,12 @@
             $this->db->query('SELECT * FROM users WHERE email = :email LIMIT 1');
             $this->db->bind(':email', $form['user']);
             $row = $this->db->single();
+            $hashed_password = $row->password;
 
-            if($row){
-                $hashed_password = $row->password;
-                if(password_verify($form['password'], $hashed_password)){
-                    return $row;
-                } else {
-                    die('password does not match');
-                }
+            if(password_verify($form['password'], $hashed_password)){
+                return $row;
             } else {
-                die('email does not exist');
+                return false;
             }
         }
 
@@ -25,15 +21,12 @@
             $this->db->query('SELECT * FROM users WHERE username = :username LIMIT 1');
             $this->db->bind(':username', $form['user']);
             $row = $this->db->single();
-            if($row){
-                $hashed_password = $row->password;
-                if(password_verify($form['password'], $hashed_password)){
-                    return $row;
-                } else {
-                    die('password does not match');
-                }
+            $hashed_password = $row->password;
+
+            if(password_verify($form['password'], $hashed_password)){
+                return $row;
             } else {
-                die('username does not exist');
+                return false;
             }
         }
 

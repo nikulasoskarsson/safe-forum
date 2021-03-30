@@ -1,5 +1,7 @@
 <?php
     class Users extends Controller{
+        private $loginType;
+
         public function __construct(){
             $this->userModel = $this->model('User');
         }
@@ -8,31 +10,75 @@
 
             // GET
             if($_SERVER['REQUEST_METHOD'] != 'POST'){
-                $this->view('users/login');
+                $form = [
+                    'user' => '',
+                    'password' => '',
+                ];
+
+                $errors = [
+                    'user' => '',
+                    'password' => '',
+                ];
+
+                $data = [
+                    'form' => $form,
+                    'errors' => $errors,
+                ];
+
+                $this->view('users/login', $data);
             } else {
                 // POST
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                $data = [
+                $form = [
                     'user' => trim($_POST['user']),
                     'password' => trim($_POST['password']),
-                    'user_error' => '',
-                    'password_error' => '',
                 ];
 
-                // Handle email login
-                if(filter_var($data['user'], FILTER_VALIDATE_EMAIL)){
-                    $user = $this->userModel->loginWithEmail($data);
-                    if($user){
-                        createUserSession($user);
+                $errors = [
+                    'user' => '',
+                    'password' => '',
+                ];
+
+                // Server side validation
+                $errors['user'] = minMaxEmpty($form['user'], 'Username or email', 2, 20);
+                $errors['password'] = minMaxEmpty($form['password'], 'Password', 6, 20);
+
+                // Check if user is logging in with username or email and if that username or email is in the db
+                if(filter_var($form['user'], FILTER_VALIDATE_EMAIL)){
+                    if(!$this->userModel->findUserByEmail($form['user'])){
+                        $errors['user'] = 'Email not found';
                     } else {
-                        die('fail');
+                        $this->loginType = 'email';
                     }
-                } else{
-                    if($this->userModel->loginWithUsername($data)){
-                        die('success');
+                } else {
+                    if(!$this->userModel->findUserByUsername($form['user'])){
+                        $errors['user'] = 'Username not found';
                     } else {
-                        die('fail');
+                        $this->loginType = 'username';
+                    }
+                }
+
+                $data = [
+                    'form' => $form,
+                    'errors' => $errors,
+                ];
+
+                if(isErrorInErrorArray($data['errors'])){
+                    $this->view('users/login', $data);
+                } else {
+                    if($this->loginType == 'email'){
+                        $user = $this->userModel->loginWithEmail($form);
+                    } else {
+                        $user = $this->userModel->loginWithUsername($form);
+                    }
+                    if(!$user){
+                        $data['errors']['password'] = 'Password is not correct';
+                        $this->view('users/login', $data);
+                    } else {
+                        createUserSession($user);
+                        die('success');
+                        // TODO redirect to posts page
                     }
                 }
             }

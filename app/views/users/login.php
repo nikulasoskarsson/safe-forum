@@ -1,3 +1,4 @@
+
 <?php require_once(APPROOT . '/views/inc/header.php') ?>
     <div class="row">
         <div class="col-md-6 mx-auto">
@@ -7,11 +8,13 @@
                 <form action="<?= URLROOT ?>/users/login" method="POST">
                 <div class="mb-3">
                     <label for="user" class="form-label">Email address or username</label>
-                    <input type="text" class="form-control" id="user" name="user">
+                    <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'user') ?>" id="user" name="user" value="<?= $data['form']['user'] ?>">
+                    <?php checkAndShowError($data['errors']['user']) ?>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control <?= getBootstrapValidationClass($data, 'password') ?>" id="password" name="password"value="<?= $data['form']['password'] ?>">
+                    <?php checkAndShowError($data['errors']['password']) ?>
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="terms">
