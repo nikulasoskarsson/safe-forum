@@ -41,7 +41,7 @@
                 ];
 
                 // Server side validation
-                $errors['user'] = minMaxEmpty($form['user'], 'Username or email', 2, 20);
+                $errors['user'] = minMaxEmpty($form['user'], 'Username or email', 2, 40); // TODO handle differnet validation for email and username
                 $errors['password'] = minMaxEmpty($form['password'], 'Password', 6, 20);
 
                 // Check if user is logging in with username or email and if that username or email is in the db

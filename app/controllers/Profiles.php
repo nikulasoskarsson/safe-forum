@@ -12,4 +12,13 @@
                 return $this->view('profiles/profile', $data);
             }
         }
+
+        public function uploadProfileImage(){
+            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+                die('posts request only');
+            } else {
+                $name = uploadSingleImage($_FILES['profile-img']);
+                $this->profileModel->addUserImg($name);
+            }
+        }
     }
