@@ -10,8 +10,8 @@
                     <input type="file" style="display:none;" name="profile-img" id="profile-img">
                     <button class="btn btn-success">Upload</button>
                 </form>
-                <h3>Nikulás Óskarsson</h3>
-                <h6 class="lead">nikulasoskarsson</h6>
+                <h3><?= "$data->first_name $data->last_name"?></h3>
+                <h6 class="lead"><?= $data->username ?></h6>
                 <p class="text-primary">Last online 23 days ago</p>
                 <div class="div-flex">
                     <button class="btn btn-success">Follow <i class="fas fa-user-plus"></i></button>
