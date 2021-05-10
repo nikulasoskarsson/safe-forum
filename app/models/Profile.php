@@ -6,7 +6,7 @@
 
         public function getUserData($username){
             $this->db->query('SELECT first_name, last_name, username, email, created_at, url 
-                                FROM users INNER JOIN user_images ON users.id = user_images.user_id WHERE username = :username');
+                                FROM users LEFT JOIN user_images ON users.id = user_images.user_id WHERE username = :username');
             $this->db->bind(':username', $username);
             $row = $this->db->single();
 
