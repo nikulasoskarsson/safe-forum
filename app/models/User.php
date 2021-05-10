@@ -49,7 +49,11 @@
                 return false;
             }
         }
-
+        public function getUserByUsername($username) {
+            $this->db->query('SELECT * FROM users WHERE username = :username');
+            $this->db->bind(':username', $username);
+            return $this->db->single();
+        }
         public function findUserByEmail($email){
             $this->db->query('SELECT * FROM users WHERE email = :email');
             $this->db->bind(':email', $email);
