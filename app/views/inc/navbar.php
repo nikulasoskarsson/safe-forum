@@ -13,19 +13,25 @@
           <a class="nav-link" href="#">Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">About</a>
+          <a class="nav-link" href="<?= URLROOT ?>/pages/about"  tabindex="-1" aria-disabled="true">About</a>
         </li>
       </ul>
       <ul class="navbar-nav">
+        <?php if (isLoggedIn()): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= URLROOT . '/profiles/' . $_SESSION['username'] ?>" tabindex="-1" aria-disabled="true">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= URLROOT ?>/users/logout" tabindex="-1" aria-disabled="true">Logout</a>
+          </li>
+        <?php else: ?>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?= URLROOT ?>/users/login">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= URLROOT ?>/users/register">Register</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Logout</a>
-        </li>
+        <?php  endif ?>
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

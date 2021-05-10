@@ -69,6 +69,7 @@
                 } else {
                     if($this->loginType == 'email'){
                         $user = $this->userModel->loginWithEmail($form);
+                        
                     } else {
                         $user = $this->userModel->loginWithUsername($form);
                     }
@@ -77,8 +78,7 @@
                         $this->view('users/login', $data);
                     } else {
                         createUserSession($user);
-                        die('success');
-                        // TODO redirect to posts page
+                        header('Location: ' . URLROOT . "/profiles/$user->username");
                     }
                 }
             }
@@ -166,14 +166,19 @@
                     $this->view('users/register', $data);
                 } else {
                     $form['password'] = password_hash($data['form']['password'], true);
-                    
-                    if($this->userModel->register($form)){
-                        die('success');
+                    $user = $this->userModel->register($form);
+                    if($user){
+                        header('Location: ' . URLROOT . "/profiles/$user->username");
                     } else {
                         die('fail');
                     }
                 }
 
             }
+        }
+
+        public function logout() {
+            destroyUserSession();
+            header('Location: ' . URLROOT . '/users/login');
         }
     }

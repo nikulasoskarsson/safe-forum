@@ -5,7 +5,8 @@
         }
 
         public function getUserData($username){
-            $this->db->query('SELECT * FROM users WHERE username = :username');
+            $this->db->query('SELECT first_name, last_name, email, created_at, url 
+                                FROM users INNER JOIN user_images ON users.id = user_images.user_id WHERE username = :username');
             $this->db->bind(':username', $username);
             $row = $this->db->single();
 
@@ -17,7 +18,6 @@
             $this->db->bind(':user_id', $_SESSION['user_id']);
             $this->db->bind(':url', $url);
 
-            $res = $this->db->execute();
-            var_dump($res);
+            return $this->db->execute();
         }
     }

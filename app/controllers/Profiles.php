@@ -4,11 +4,13 @@
             $this->profileModel = $this->model('Profile');
             $this->userModel = $this->model('User');
         }
+        
         public function index($username){
             if(!$this->userModel->findUserByUsername($username)){
                 return $this->view('profiles/not-found', $username);
             } else {
                 $data = $this->profileModel->getUserData($username);
+
                 return $this->view('profiles/profile', $data);
             }
         }
@@ -18,7 +20,9 @@
                 die('posts request only');
             } else {
                 $name = uploadSingleImage($_FILES['profile-img']);
-                $this->profileModel->addUserImg($name);
+                if($this->profileModel->addUserImg($name)) {
+                   $this->index($_SESSION['username']);
+                }
             }
         }
     }
