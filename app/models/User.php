@@ -43,6 +43,7 @@
             $this->db->bind(':password', $form['password']);
 
             if($this->db->execute()){
+                echo $this->db->lastInsertId(); exit;
                 return true;
             }
             else{
