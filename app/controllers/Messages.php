@@ -19,6 +19,7 @@
                 $errors = [
                     'title' => '',
                     'body' => '',
+                    'message' => '',
                 ];
 
                 $data = [
@@ -39,9 +40,19 @@
                 ];
 
                 $errors = [
-                    'title' => '',
-                    'body' => '',
+                    'title' => minMaxEmpty($form['title'], 'The title', 2, 20),
+                    'body' => minMaxEmpty($form['body'], 'The message', 2, 200),
+                    'message' => '',
                 ];
+
+                // Check if the user recieving the message exists
+                if($this->userModel->findUserById($id)) {
+                    $errors['message'] = 'You are trying to send a message to a user that does not exist';
+                }
+                // Check if the user sending the message exists
+                if($this->userModel->findUserById($id)) {
+                    $errors['message'] = 'You are trying to send message from an account that was not found in the database';
+                }
 
                 $data = [
                     'form' => $form, 
@@ -51,7 +62,7 @@
                 // TODO server side validation
 
                 if(isErrorInErrorArray($errors)) {
-                    // TODO load view with errors
+                    $this->view('messages/create-message', $data);
                 } else {
                     $this->messageModel->createMessage($form, $id);
                 }
