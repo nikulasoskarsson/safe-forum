@@ -125,8 +125,8 @@
                     $this->view('posts/new_post', $data);
                 } else {
                     $post = $this->postModel->createForumPost($form);
-                    if($post){
-                        header('Location: ' . URLROOT . "/posts"); //Re-do for direct new post redirect.
+                    if($post !== false){
+                        header('Location: ' . URLROOT . "/posts/post/$post"); //Re-do for direct new post redirect.
                     } else {
                         die('fail');
                     }

@@ -167,18 +167,23 @@
 
             $sucess = $this->db->execute();
 
-            $firstCommentId = $this->db->lastInsertId();
+            $firstPosdId = $this->db->lastInsertId();
             //Insert first posts comment
             if ($sucess) {
                 $this->db->query('INSERT INTO 
                 comments (post_id, user_id, date, comment)
                 values (:post_id, :user_id, :date, :comment)
                 ');
-                $this->db->bind(':post_id', $firstCommentId);
+                $this->db->bind(':post_id', $firstPosdId);
                 $this->db->bind(':user_id', $_SESSION['user_id']);
                 $this->db->bind(':date', $date);
                 $this->db->bind(':comment', $form['post_first_comment']);
-                return $outcome = $this->db->execute();
+                $outcome = $this->db->execute();
+                if ($outcome) {
+                    return $firstPosdId;
+                } else {
+                    return false;
+                }
             }
         }
 
