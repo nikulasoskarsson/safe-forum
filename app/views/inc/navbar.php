@@ -10,7 +10,7 @@
           <a class="nav-link active" aria-current="page" href="<?= URLROOT ?>">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Categories</a>
+          <a class="nav-link" href="<?= URLROOT ?>/posts">Discussions</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= URLROOT ?>/pages/about"  tabindex="-1" aria-disabled="true">About</a>
