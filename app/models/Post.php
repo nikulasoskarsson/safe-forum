@@ -86,7 +86,7 @@
                             <form action="<?= URLROOT ?>/posts/post/<?= $row->post_id ?>" method="POST">
                                 <div class="mb-3">
                                     <textarea class="form-control <?= getBootstrapValidationClass($data, 'post_comment') ?>" 
-                                    id="postComment" name="postComment" rows="3" placeholder="Share your thoughts" value="<?= $data['form']['post_comment'] ?>"></textarea>
+                                        id="postComment" name="postComment" rows="3" placeholder="Share your thoughts" value="<?= $data['form']['post_comment'] ?>"></textarea>
                                     <?php checkAndShowError($data['errors']['post_comment']) ?>
                                 </div>
                                 <div class="row">

@@ -1,18 +1,23 @@
 <?php require(APPROOT . '/views/inc/header.php'); ?>
 
 <div class="container-fluid mt-100">
-    <h3 class="text-center">Create a new post</h3>
+
+    <div class="d-flex flex-wrap justify-content-between mb-3">
+        <div> <a href="<?= URLROOT ?>/posts" class="btn btn-shadow btn-wide btn-primary"> <span class="btn-icon-wrapper pr-2 opacity-7"> </span> Back to posts </a> </div>
+    </div>
+
+    <h3 class="text-center mb-2">Create a new post</h3>
 
     <form action="<?= URLROOT ?>/posts/create" method="POST">
         <div class="mb-3">
-            <label for="postTitle" class="form-label">Post title</label>
-            <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_title') ?>" id="postTitle" name="postTitle" value="<?= $data['form']['post_title'] ?>">
+            <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_title') ?>" id="postTitle" name="postTitle" placeholder="Post title" value="<?= $data['form']['post_title'] ?>">
             <?php checkAndShowError($data['errors']['post_title']) ?>
         </div>
         
         <div class="mb-3">
-            <label for="postText" class="form-label">Text</label>
-            <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_first_comment') ?>" rows = "3" id="postText" name="postText"value="<?= $data['form']['post_first_comment'] ?>">
+            <textarea 
+                type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_first_comment') ?>" placeholder="Share your thoughts" rows = "6" id="postText" 
+                name="postText"value="<?= $data['form']['post_first_comment'] ?>"></textarea>
             <?php checkAndShowError($data['errors']['post_first_comment']) ?>
         </div>
         <div class="row">
