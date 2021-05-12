@@ -124,11 +124,15 @@
                 if(isErrorInErrorArray($errors)){
                     $this->view('posts/new_post', $data);
                 } else {
-                    $post = $this->postModel->createForumPost($form);
-                    if($post !== false){
-                        header('Location: ' . URLROOT . "/posts/post/$post"); //Re-do for direct new post redirect.
+                    if (isLoggedIn()) {
+                        $post = $this->postModel->createForumPost($form);
+                        if($post !== false){
+                            header('Location: ' . URLROOT . "/posts/post/$post");
+                        } else {
+                            die('fail');
+                        }
                     } else {
-                        die('fail');
+                        die ('fail');
                     }
                 }
             }
