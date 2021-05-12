@@ -1,15 +1,9 @@
 <?php require_once(APPROOT . '/views/inc/header.php') ?>
-<?php var_dump($data) ?>
     <div class="row">
         <div class="col-md-4">
             <div class="card card-body text-center">
                 <label for="profile-img">
-                    <img
-                        style="height:135px; width:135px; object-fit:cover;" 
-                        class="mx-auto img-thumbnail rounded-circle" 
-                        src="<?= URLROOT . '/public/assets/img/profiles/' . ($data->url ? $data->url  : 'default.jpg' )?>" 
-                        alt="Profile image"
-                    >
+                    <img style ="height:135px; width:135px; object-fit:cover;" class="mx-auto img-thumbnail rounded-circle" src="<?= URLROOT . '/public/assets/img/profiles/' . $data->url ?>" alt="">
                 </label>
                 <form action="<?= URLROOT ?>/profiles/uploadProfileImage" method="POST" enctype="multipart/form-data">
                     <input type="file" style="display:none;" name="profile-img" id="profile-img">

@@ -166,10 +166,8 @@
                     $this->view('users/register', $data);
                 } else {
                     $form['password'] = password_hash($data['form']['password'], true);
-
-                    if($this->userModel->register($form)){
-                        $user = $this->userModel->getUserByUsername($form['username']);
-                        createUserSession($user);
+                    $user = $this->userModel->register($form);
+                    if($user){
                         header('Location: ' . URLROOT . "/profiles/$user->username");
                     } else {
                         die('fail');

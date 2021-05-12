@@ -19,10 +19,6 @@
             if($_SERVER['REQUEST_METHOD'] != 'POST'){
                 die('posts request only');
             } else {
-                $previousImage = $this->profileModel->getImageByUserId($_SESSION['user_id']);
-                if($previousImage) {
-                    removeSingleImage($previousImage->url);
-                }
                 $name = uploadSingleImage($_FILES['profile-img']);
                 if($this->profileModel->addUserImg($name)) {
                    $this->index($_SESSION['username']);

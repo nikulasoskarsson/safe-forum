@@ -26,7 +26,3 @@
         
         return $uniqueImgName;
     }
-
-    function removeSingleImage($url) {
-        unlink(ASSETS . "/img/profiles/$url");
-    }
