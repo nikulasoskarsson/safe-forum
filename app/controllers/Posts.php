@@ -10,6 +10,75 @@
             $this->postModel->displayPagedPosts($posts);
         }
 
+        public function post($postId) {
+            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+
+                $form = [
+                    'post_comment' => ''
+                ];
+
+                $errors = [
+                    'post_comment' => ''
+                ];
+
+                $data = [
+                    'form' => $form,
+                    'errors' => $errors,
+                ];
+                $this->view('/posts/individual_post');
+
+                //Get all discussions for the post ID
+                $discussions = $this->postModel->postDiscussions($postId);
+                if ($discussions) {
+                    //Display discussions for the post ID
+                    $this->postModel->displayPostDiscussions($discussions, $data);
+                } else {
+                    //No discussions with post ID found
+                    header('Location: ' . URLROOT . "/posts");
+                }
+
+            } else {
+
+                if (isLoggedIn()) {
+
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                    $form = [
+                        'post_comment' => trim($_POST['postComment'])
+                    ];
+
+                    $errors = [
+                        'post_comment' => ''
+                    ];
+
+                    // Server side validation
+                    $errors['post_comment'] = minMaxEmpty($form['post_comment'], 'Text', 3, 5000);
+
+                    $data = [
+                        'form' => $form,
+                        'errors' => $errors,
+                    ];
+
+                    if(isErrorInErrorArray($errors)){
+
+                        $this->postModel->displayPostDiscussions($discussions, $data); //TO DO - ERROR DISPLAY HAS TO BE FIXED
+
+                    } else {
+
+                        $commentOutcome = $this->postModel->commentOnPost($form, $postId);
+                        if ($commentOutcome) {
+                            header('Location: ' . URLROOT . "/posts/post/$postId");
+                        } else {
+                            die('fail');
+                        }
+                    }
+
+                } else {
+                    die('fail');
+                }
+            }
+        }
+
         public function create() {
             //GET
             if($_SERVER['REQUEST_METHOD'] != 'POST'){

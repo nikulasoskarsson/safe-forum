@@ -1,5 +1,4 @@
 <?php require_once(APPROOT . '/views/inc/header.php') ?>
-<?php var_dump($data) ?>
     <div class="row">
         <div class="col-md-4">
             <div class="card card-body text-center">

@@ -12,12 +12,12 @@
         
         <div class="mb-3">
             <label for="postText" class="form-label">Text</label>
-            <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_first_comment') ?>" id="postText" name="postText"value="<?= $data['form']['post_first_comment'] ?>">
+            <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_first_comment') ?>" rows = "3" id="postText" name="postText"value="<?= $data['form']['post_first_comment'] ?>">
             <?php checkAndShowError($data['errors']['post_first_comment']) ?>
         </div>
         <div class="row">
             <div class="col">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Post</button>
             </div>
         </div>
     </form>
