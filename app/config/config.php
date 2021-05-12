@@ -8,5 +8,7 @@
     define('APPROOT', dirname(dirname(__FILE__)));
     // URL root
     define('URLROOT', 'http://localhost/forum');
+    // Public root
+    define('ASSETS', dirname(dirname(dirname(__FILE__))) . '/public/assets');
     // Site name
     define('SITENAME', 'Forum');

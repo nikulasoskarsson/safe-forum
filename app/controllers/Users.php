@@ -41,7 +41,7 @@
                 ];
 
                 // Server side validation
-                $errors['user'] = minMaxEmpty($form['user'], 'Username or email', 2, 20);
+                $errors['user'] = minMaxEmpty($form['user'], 'Username or email', 2, 40); // TODO handle differnet validation for email and username
                 $errors['password'] = minMaxEmpty($form['password'], 'Password', 6, 20);
 
                 // Check if user is logging in with username or email and if that username or email is in the db
@@ -69,6 +69,7 @@
                 } else {
                     if($this->loginType == 'email'){
                         $user = $this->userModel->loginWithEmail($form);
+                        
                     } else {
                         $user = $this->userModel->loginWithUsername($form);
                     }
@@ -77,8 +78,7 @@
                         $this->view('users/login', $data);
                     } else {
                         createUserSession($user);
-                        die('success');
-                        // TODO redirect to posts page
+                        header('Location: ' . URLROOT . "/profiles/$user->username");
                     }
                 }
             }
@@ -165,14 +165,22 @@
                 if(isErrorInErrorArray($errors)){
                     $this->view('users/register', $data);
                 } else {
-                    $data['form']['password'] = password_hash($data['form']['password'], true);
+                    $form['password'] = password_hash($data['form']['password'], true);
+
                     if($this->userModel->register($form)){
-                        die('success');
+                        $user = $this->userModel->getUserByUsername($form['username']);
+                        createUserSession($user);
+                        header('Location: ' . URLROOT . "/profiles/$user->username");
                     } else {
                         die('fail');
                     }
                 }
 
             }
+        }
+
+        public function logout() {
+            destroyUserSession();
+            header('Location: ' . URLROOT . '/users/login');
         }
     }
