@@ -20,7 +20,7 @@
                 <p class="text-primary">Last online 23 days ago</p>
                 <div class="div-flex">
                     <button class="btn btn-success">Follow <i class="fas fa-user-plus"></i></button>
-                    <button class="btn btn-info text-white">Message <i class="fas fa-envelope"></i> </button>
+                    <a href="<?= URLROOT . "/messages/new/$data->user_id" ?>" class="btn btn-info text-white">Message <i class="fas fa-envelope"></i> </a>
                 </div>
             </div>
         </div>
