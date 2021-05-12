@@ -69,4 +69,12 @@
 
             return $row ? true : false;
         }
+
+        public function findUserById($id) {
+            $this->db->query('SELECT * FROM users WHERE id = :id');
+            $this->db->bind(':id', $id);
+            $row = $this->db->single();
+
+            return $row ? true : false;
+        }
     }

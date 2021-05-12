@@ -2,6 +2,7 @@
     class Messages extends Controller {
         public function __construct() {
             $this->messageModel = $this->model('Message');
+            $this->userModel = $this->model('User');
         }
         // All messages
         public function index() {
@@ -24,7 +25,10 @@
                     'form' => $form, 
                     'errors' => $errors,
                 ];
-                $this->view('messages/create-message', $data);
+                
+                $this->userModel->findUserById($id) 
+                    ?  $this->view('messages/create-message', $data) 
+                    : $this->view('messages/user-not-found');
             } else {
                 // POST
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
