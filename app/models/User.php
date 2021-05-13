@@ -43,7 +43,6 @@
             $this->db->bind(':password', $form['password']);
 
             if($this->db->execute()){
-                echo $this->db->lastInsertId(); exit;
                 return true;
             }
             else{
@@ -66,6 +65,14 @@
         public function findUserByUsername($username){
             $this->db->query('SELECT * FROM users WHERE username = :username');
             $this->db->bind(':username', $username);
+            $row = $this->db->single();
+
+            return $row ? true : false;
+        }
+
+        public function findUserById($id) {
+            $this->db->query('SELECT * FROM users WHERE id = :id');
+            $this->db->bind(':id', $id);
             $row = $this->db->single();
 
             return $row ? true : false;
