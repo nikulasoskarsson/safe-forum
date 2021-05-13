@@ -7,7 +7,7 @@
         //Create a comment in a post
 
         public function commentOnPost($form, $postId) {
-            $date = date('Y-m-d H:i');
+            $date = date('Y-m-d H:i:S');
 
             $this->db->query('INSERT INTO 
             comments (post_id, user_id, date, comment)
@@ -104,7 +104,7 @@
 
         //Get posts by limit
         public function returnPagedPosts($start, $end) {
-            $this->db->query('SELECT * FROM posts LIMIT :start, :end');
+            $this->db->query('SELECT * FROM posts ORDER BY date DESC LIMIT :start, :end');
             $this->db->bind(':start', $start);
             $this->db->bind(':end', $end);
             $posts = $this->db->resultSet();
@@ -118,6 +118,8 @@
                 <div class="container-fluid mt-100" id="postsContainer">';
             foreach ($posts as $row) {
 
+                $postCreationDate = substr($row->date, 0, -3);
+
                 //Prepare post creator info
                 $this->db->query('SELECT first_name, last_name, username FROM users WHERE id = :id');
                 $this->db->bind(':id', $row->user_id);
@@ -130,16 +132,28 @@
                 $repliesCount = $this->db->single();
                 $postLink = URLROOT . '/posts/post/' . $row->id;
 
+                //Get last post comment info
+                $this->db->query('SELECT user_id, comment, MAX(date) r FROM comments WHERE post_id = :post_id');
+                $this->db->bind(':post_id', $row->id);
+                $lastComment = $this->db->single();
+
+                //Get last comment user
+                $this->db->query('SELECT first_name, last_name, username FROM users WHERE id = :id');
+                $this->db->bind(':id', $lastComment->user_id);
+                $lastCommentor = $this->db->single();
+                $lastCommentorProfile = URLROOT . '/profiles/' . $lastCommentor->username;
+                $lastCommentTime = substr($lastComment->r, 0, -3);
+
                 echo "
                 <div class='card mb-3'>
                     <div class='card-header'>
                         <div class='row w-100'>
                             <div class='col col-md-6'> <a href='$postLink' class='text-big'>$row->title</a>
-                                <div class='text-muted small mt-1'>Created at $row->date&nbsp;·&nbsp; <a href='$creatorProfile' class='text-muted'>$creator->first_name $creator->last_name</a></div>
+                                <div class='text-muted small mt-1'>Created at $postCreationDate &nbsp;·&nbsp; <a href='$creatorProfile' class='text-muted'>$creator->first_name $creator->last_name</a></div>
                             </div>
                             <div class='col'>$repliesCount->r</div>
                             <div class='col'>
-                                <div class='line-height-1 text-truncate'>X day ago</div> <a href='javascript:void(0)' class='text-muted small text-truncate'>by xxx TODO</a>
+                                <div class='line-height-1 text-truncate'>$lastCommentTime</div> <a href='$lastCommentorProfile' class='text-muted small text-truncate'>$lastCommentor->first_name $lastCommentor->last_name</a>
                             </div>
                         </div>
                     </div>
@@ -154,7 +168,7 @@
         //Create new forum post
         public function createForumPost($form){
     
-            $date = date('Y-m-d H:i');
+            $date = date('Y-m-d H:i:s');
 
             //Insert first post
             $this->db->query('INSERT INTO 
