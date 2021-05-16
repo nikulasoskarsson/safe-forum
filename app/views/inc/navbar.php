@@ -19,6 +19,9 @@
       <ul class="navbar-nav">
         <?php if (isLoggedIn()): ?>
           <li class="nav-item">
+            <a class="nav-link" href="<?= URLROOT ?>/messages" tabindex="-1" aria-disabled="true">Messages</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?= URLROOT . '/profiles/' . $_SESSION['username'] ?>" tabindex="-1" aria-disabled="true">Profile</a>
           </li>
           <li class="nav-item">
