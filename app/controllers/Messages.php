@@ -12,7 +12,7 @@
         public function new($id) {
             if($_SERVER['REQUEST_METHOD'] != 'POST') {
                 $messageData = $this->messageModel->getAllMessagesFromChatAndUserData($_SESSION['user_id'], $id);
-                var_dump($messageData); 
+                var_dump($messageData);
                 $form = [
                     'body' => '',
                 ];
@@ -69,7 +69,7 @@
                     
                     $this->messageModel->createMessage($chatId, $form);
 
-                    $this->new($id);
+                    $this->view('messages/create-message', $data);
                 }
             }
         }

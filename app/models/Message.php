@@ -34,9 +34,18 @@
             
         }
 
+        // TODO refactor query to only get the users once
         public function getAllMessagesFromChatAndUserData($fromUserId, $toUserId) {
-            $this->db->query('SELECT * FROM chats LEFT OUTER JOIN messages ON chats.id = messages.chat_id 
-                                WHERE from_user_id = :fromUserId AND to_user_id = :toUserId');
+            $this->db->query('SELECT sender.first_name AS sender_first_name, sender.last_name AS sender_last_name,
+                                sender.username AS sender_username, reciever.first_name AS reciever_first_name, reciever.last_name AS reciever_last_name,
+                                reciever.username AS reciever_username, chats.id AS chat_id, messages.body AS message_body, timestamp
+                                FROM chats 
+                                LEFT OUTER JOIN messages ON chats.id = messages.chat_id 
+                                LEFT OUTER JOIN users AS sender ON chats.from_user_id = sender.id 
+                                LEFT OUTER JOIN users AS reciever ON chats.to_user_id = reciever.id 
+                                WHERE from_user_id = :fromUserId AND to_user_id = :toUserId
+                                ORDER BY timestamp DESC
+                                ');
             $this->db->bind(':fromUserId', $fromUserId);
             $this->db->bind(':toUserId', $toUserId);
 
