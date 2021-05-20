@@ -6,7 +6,17 @@
 
         public function index() {
             $this->view('/posts/discussions');
-            $posts = $this->postModel->returnPagedPosts(0, 20);
+            pageSession();
+            $posts = $this->postModel->returnPagedPosts(0, 10);
+            $this->postModel->displayPagedPosts($posts);
+        }
+
+        public function page($pageNumer) {
+            $this->view('/posts/discussions');
+            $_SESSION['pageNumber'] = $pageNumer;
+            $startPage = ($pageNumer - 1) * 10;
+            $endPage = $startPage + 10;
+            $posts = $this->postModel->returnPagedPosts($startPage, $endPage);
             $this->postModel->displayPagedPosts($posts);
         }
 

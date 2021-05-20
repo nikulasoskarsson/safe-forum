@@ -13,3 +13,7 @@
     function isLoggedIn() {
         return isset($_SESSION['user_id']) ? true : false;
     }
+
+    function pageSession() {
+        $_SESSION['pageNumber'] = 1;
+    }

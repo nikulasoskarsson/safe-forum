@@ -144,6 +144,11 @@
                 $lastCommentorProfile = URLROOT . '/profiles/' . $lastCommentor->username;
                 $lastCommentTime = substr($lastComment->r, 0, -3);
 
+                //Get total posts number
+                $this->db->query('SELECT COUNT(id) total FROM posts');
+                $totalPosts = $this->db->single();
+                $totalPages = ceil($totalPosts->total/10);
+
                 echo "
                 <div class='card mb-3'>
                     <div class='card-header'>
@@ -159,10 +164,27 @@
                     </div>
                 </div>
                 ";
-            }
-            echo '
-            </div> 
-                </div>';
+            } ?>
+                <div class="d-flex flex-wrap justify-content-between mb-3">
+                    <div> 
+                        <?php if ($_SESSION['pageNumber'] != 1) { ?>
+                        <a href="<?= URLROOT ?>/posts/page/<?= $_SESSION['pageNumber'] - 1?>" class="btn btn-shadow btn-wide btn-primary"> 
+                            <span class="btn-icon-wrapper pr-2 opacity-7"> <i class="fa fa-minus fa-w-20"></i> </span> Previous page 
+                        </a> 
+                        <?php } ?>
+                    </div>
+                    <span> Page <?=$_SESSION['pageNumber']?> out of <?=$totalPages?> </span>
+                    <div> 
+                        <?php if ($_SESSION['pageNumber'] != $totalPages) { ?>
+                            <a href="<?= URLROOT ?>/posts/page/<?= $_SESSION['pageNumber'] + 1?>" class="btn btn-shadow btn-wide btn-primary"> 
+                                <span class="btn-icon-wrapper pr-2 opacity-7"> <i class="fa fa-plus fa-w-20"></i> </span> Next page 
+                            </a>
+                        <?php } ?>
+                    </div>
+                </div>
+                </div>
+            </div>
+        <?php ;
         }
 
         //Create new forum post
