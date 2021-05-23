@@ -14,11 +14,6 @@
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="mb-3">
-                                <label for="title" class="form-label">Title</label>
-                                <input type="text" name="title" class="form-control <?= getBootstrapValidationClass($data, 'title') ?>" value="<?= $data['form']['title'] ?>">
-                                <?php checkAndShowError($data['errors']['title']) ?>
-                            </div>
-                            <div class="mb-3">
                                 <label for="body" class="form-label">Body</label>
                                 <textarea name="body" class="form-control <?= getBootstrapValidationClass($data, 'body') ?>" rows="12"><?= $data['form']['body'] ?></textarea>
                                 <?php checkAndShowError($data['errors']['body']) ?>
