@@ -109,6 +109,10 @@
                 $this->view('/posts/new_post', $data);
             //POST
             } else {
+                if(!validateToken($_POST['csrf_token'])){
+                    echo 'Csrf token invalid';
+                    exit;
+                }
 
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 

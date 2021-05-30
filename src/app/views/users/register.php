@@ -5,6 +5,7 @@
                 <h3>Sign up for Forum</h3>
                 <p>Please fill out this form to register with us</p>
                 <form action="<?= URLROOT ?>/users/register" method="POST">
+                <input type="hidden" value="<?= $_SESSION['csrf'] ?>" name="csrf_token">
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First name: <sup>*</sup></label>
                     <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'first_name') ?>" id="firstName" name="firstName" value="<?= $data['form']['first_name'] ?>">

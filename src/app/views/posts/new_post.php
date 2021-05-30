@@ -9,6 +9,7 @@
     <h3 class="text-center mb-2">Create a new post</h3>
 
     <form action="<?= URLROOT ?>/posts/create" method="POST">
+        <input type="hidden" value="<?= $_SESSION['csrf'] ?>" name="csrf_token">
         <div class="mb-3">
             <input type="text" class="form-control <?= getBootstrapValidationClass($data, 'post_title') ?>" id="postTitle" name="postTitle" placeholder="Post title" value="<?= $data['form']['post_title'] ?>">
             <?php checkAndShowError($data['errors']['post_title']) ?>

@@ -1,5 +1,13 @@
 <?php
     session_start();
+    if(empty($_SESSION['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    }
+
+    function validateToken($csrfToken) {
+        return $_SESSION['csrf'] == $csrfToken;
+    }
+
     function createUserSession($user) {
         $_SESSION['user_id'] = $user->id;
         $_SESSION['username'] = $user->username;
