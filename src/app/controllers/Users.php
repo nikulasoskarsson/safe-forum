@@ -28,6 +28,10 @@
                 $this->view('users/login', $data);
             } else {
                 // POST
+                if(!validateToken($_POST['csrf_token'])){
+                    echo 'Csrf token invalid';
+                    exit;
+                }
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 $form = [
@@ -113,6 +117,11 @@
                 $this->view('users/register', $data);
             } else {
                 // POST
+                if(!validateToken($_POST['csrf_token'])){
+                    echo 'Csrf token invalid';
+                    exit;
+                }
+                
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 $form = [
@@ -165,7 +174,7 @@
                 if(isErrorInErrorArray($errors)){
                     $this->view('users/register', $data);
                 } else {
-                    $form['password'] = password_hash($data['form']['password'], true);
+                    $form['password'] = password_hash($data['form']['password'], PASSWORD_BCRYPT);
 
                     if($this->userModel->register($form)){
                         $user = $this->userModel->getUserByUsername($form['username']);
