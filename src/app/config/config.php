@@ -7,7 +7,7 @@
     // App root
     define('APPROOT', dirname(dirname(__FILE__)));
     // URL root
-    define('URLROOT', 'http://localhost');
+    define('URLROOT', 'http://178.62.76.137');
     // Public root
     define('ASSETS', dirname(dirname(dirname(__FILE__))) . '/public/assets');
     // Site name
